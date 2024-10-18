@@ -7,8 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview",
-    "postinstall": "if [ ! -f .env ]; then cp .env.example .env; fi"
+    "preview": "vite preview"
   },
   "dependencies": {
     "@headlessui/react": "^2.1.8",
