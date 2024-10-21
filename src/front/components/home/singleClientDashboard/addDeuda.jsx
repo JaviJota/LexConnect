@@ -185,7 +185,6 @@ export const AddDeuda = ({ show, close }) => {
                       </div>
                     </div>
                     <div className="flex flex-col sm:flex-row justify-around mb-5">
-                      {/* Asegúrate de que este div tenga `relative` */}
                       <div
                         className="relative sm:col-span-12 flex flex-col items-center mb-5 sm:mb-0"
                         ref={dropdownRef}

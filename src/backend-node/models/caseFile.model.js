@@ -1,32 +1,40 @@
-const { Description } = require('@headlessui/react');
 const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
-    const Client = sequelize.define('Client', {
+    const CaseFile = sequelize.define('CaseFile', {
         id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true,
         },
-        email: {
-            type: DataTypes.STRING(256),
+        numExp: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            unique: false,
+        },
+        nig: {
+            type: DataTypes.STRING(60),
             allowNull: false,
             unique: true,
         },
-        firstName: {
-            type: DataTypes.STRING(50),
-            allowNull: false,
-            unique: false,
-        },
-        lastName: {
-            type: DataTypes.STRING(100),
-            allowNull: false,
-            unique: false,
-        },
-        phoneNumber: {
-            type: DataTypes.STRING(20),
+        description: {
+            type: DataTypes.STRING(250),
             allowNull: true,
-            unique: false
+            unique: false,
+        },
+        court: {
+            type: DataTypes.STRING(50),
+            allowNull: true,
+            unique: false,
+        },
+        status: {
+            type: DataTypes.STRING(250),
+            allowNull: false,
+            unique: false,
+        },
+        creationDate: {
+            type: DataTypes.DATEONLY,
+            defaultValue: DataTypes.NOW
         },
         userId: {
             type: DataTypes.INTEGER,
@@ -35,8 +43,8 @@ module.exports = (sequelize) => {
                 model: 'User',
                 key: 'id'
             },
-            unique: false
+            unique: false,
         },
     });
-    return Client;
+    return CaseFile;
 };
