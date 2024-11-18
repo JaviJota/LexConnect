@@ -1,12 +1,14 @@
 import { create } from 'zustand'
+import { fetchWrapper } from '../utils/fetchwrapper';
 
 export const useExpedientesStore = create(
     (set, get) => ({
         expedientes: [],
 
-        getExpedientes: async (id) => {
+        getExpedientes: async () => {
             try {
-                const resp = await fetch(import.meta.env.VITE_BACKEND_URL + `/api/users/${id}/expedientes`, {
+                const url = `${import.meta.env.VITE_BACKEND_URL}/user/casefiles`
+                const resp = await fetchWrapper(url, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -18,7 +20,7 @@ export const useExpedientesStore = create(
                     const errorMsg = data.msg;
                     throw new Error(errorMsg)
                 };
-                set({ expedientes: data.expedientes });
+                set({ expedientes: data });
                 return ({ success: true })
             } catch (error) {
                 if(
@@ -37,7 +39,8 @@ export const useExpedientesStore = create(
         },
         addExpediente: async (formData) => {
             try {
-                const resp = await fetch(import.meta.env.VITE_BACKEND_URL + '/api/expedientes', {
+                const url = `${import.meta.env.VITE_BACKEND_URL}/user/casefiles`
+                const resp = await fetchWrapper(url, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -50,7 +53,7 @@ export const useExpedientesStore = create(
                     const errorMsg = data.msg;
                     throw new Error(errorMsg);
                 }
-                set({ expedientes: data.expedientes });
+                set({ expedientes: data });
                 return ({ success: true })
             } catch (error) {
                 if(error.name === "TypeError" && error.message === "Failed to fetch"){

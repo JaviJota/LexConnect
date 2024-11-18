@@ -13,7 +13,7 @@ export const ExpedienteDashboard = () => {
   const userDataFromStore = useUserStore((state) => state.userData);
 
   const userData = userDataFromStore || JSON.parse(localStorage.getItem('lexigestUserData'));
-  const userId = userData?.user?.id;
+  const userId = userData?.id;
 
   const [error, setError] = useState("");
   const [addExpedienteModalOpen, setAddExpedienteModalOpen] = useState(false);

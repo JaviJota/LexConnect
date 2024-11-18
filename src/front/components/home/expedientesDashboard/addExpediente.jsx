@@ -34,8 +34,8 @@ export const AddExpediente = ({ show, close }) => {
     numExp: "",
     nig: "",
     clientId: [],
-    estado: "",
-    juzgado:"",
+    status: "",
+    court:"",
     description: "",
     userId: userId,
   });
@@ -68,8 +68,8 @@ export const AddExpediente = ({ show, close }) => {
         numExp: "",
         nig: "",
         clientId: [],
-        estado: "",
-        juzgado:"",
+        status: "",
+        court:"",
         description: "",
         userId: userId,
       });
@@ -87,8 +87,8 @@ export const AddExpediente = ({ show, close }) => {
       numExp: "",
       nig: "",
       clientId: [],
-      estado: "",
-      juzgado:"",
+      status: "",
+      court:"",
       description: "",
       userId: userId,
     });
@@ -106,10 +106,10 @@ export const AddExpediente = ({ show, close }) => {
 
   const filteredClients = clients?.filter(
     (client) =>
-      client.first_name
+      client.firstName
         .toLowerCase()
         .includes(clientInputValue.toLowerCase()) ||
-      client.last_name.toLowerCase().includes(clientInputValue.toLowerCase())
+      client.lastName.toLowerCase().includes(clientInputValue.toLowerCase())
   );
 
   const handleSelectClient = (client) => {
@@ -240,7 +240,7 @@ export const AddExpediente = ({ show, close }) => {
                             className="px-4 py-2 text-sm hover:bg-sky-600 hover:text-white cursor-pointer"
                             onClick={() => handleSelectClient(client)}
                           >
-                            {`${client.first_name} ${client.last_name}`}
+                            {`${client.firstName} ${client.lastName}`}
                           </li>
                         ))}
                       </ul>
@@ -249,14 +249,14 @@ export const AddExpediente = ({ show, close }) => {
 
                   <div className="flex flex-col">
                     <label
-                      htmlFor="estado"
+                      htmlFor="status"
                       className="text-sm font-medium leading-6 text-gray-900"
                     >
                       Estado*
                     </label>
                     <select
-                      id="estado"
-                      name="estado"
+                      id="status"
+                      name="status"
                       onChange={handleChange}
                       className="block rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 border-0 bg-transparent py-2.2 pl-2 mt-1 text-gray-900 placeholder:text-gray-400 sm:text-sm sm:leading-6"
                       required
@@ -299,9 +299,9 @@ export const AddExpediente = ({ show, close }) => {
                             key={selectedClient.id}
                           >
                             <p className="p-1 ml-2 text-sm text-gray-700">
-                              {selectedClient.first_name +
+                              {selectedClient.firstName +
                                 " " +
-                                selectedClient.last_name}
+                                selectedClient.lastName}
                             </p>
                             <BackspaceIcon
                               className="size-4 cursor-pointer mr-3"
@@ -332,15 +332,15 @@ export const AddExpediente = ({ show, close }) => {
                   </div>
                   <div className="flex flex-col">
                     <label
-                      htmlFor="juzgado"
+                      htmlFor="court"
                       className="text-sm font-medium leading-6 text-gray-900"
                     >
                       Juzgado
                     </label>
                     <input
                       onChange={handleChange}
-                      id="juzgado"
-                      name="juzgado"
+                      id="court"
+                      name="court"
                       type="text"
                       placeholder="Juzgado"
                       className="block rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 border-0 bg-transparent py-1.5 pl-2 mt-1 text-gray-900 placeholder:text-gray-400 sm:text-sm sm:leading-6"

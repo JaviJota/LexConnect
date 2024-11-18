@@ -1,4 +1,5 @@
 import { create } from 'zustand'
+import { fetchWrapper } from '../utils/fetchwrapper';
 
 export const useDeudasStore = create(
     (set, get) => ({
@@ -7,7 +8,8 @@ export const useDeudasStore = create(
 
         getDeudas: async (id) => {
             try {
-                const resp = await fetch(import.meta.env.VITE_BACKEND_URL + `/api/client/${id}/deudas`, {
+              const url = `${import.meta.env.VITE_BACKEND_URL}/clients/${id}/debts`
+                const resp = await fetchWrapper(url, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -24,7 +26,7 @@ export const useDeudasStore = create(
                     const errorMsg = data.msg;
                     throw new Error(errorMsg);
                 }
-                set({ deudas: data.deudas })
+                set({ deudas: data })
                 return ({ success: true})
             } catch (error) {
                 if(
@@ -41,11 +43,10 @@ export const useDeudasStore = create(
                 return { success: false, msg: error.message }
             }
         },
-        addDeuda: async (formData) => {
+        addDeuda: async (formData, id) => {
             try {
-              const resp = await fetch(
-                import.meta.env.VITE_BACKEND_URL + "/api/deudas",
-                {
+              const url = `${import.meta.env.VITE_BACKEND_URL}/clients/${id}/debts`
+              const resp = await fetchWrapper(url, {
                   method: "POST",
                   headers: {
                     "Content-Type": "application/json",
@@ -59,7 +60,7 @@ export const useDeudasStore = create(
                 const errorMsg = data.msg;
                 throw new Error(errorMsg);
               }
-              set({ deudas: data.deudas })
+              set({ deudas: data })
               return { success: true };
             } catch (error) {
               if (error.name === "TypeError" && error.message === "Failed to fetch") {
@@ -106,7 +107,8 @@ export const useDeudasStore = create(
         },
         deudaToPago: async (id) => {
             try {
-              const resp = await fetch(import.meta.env.VITE_BACKEND_URL + `/api/pagos/${id}`, {
+              const url = `${import.meta.env.VITE_BACKEND_URL}/payments/${id}`
+              const resp = await fetchWrapper(url, {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
@@ -118,8 +120,8 @@ export const useDeudasStore = create(
                 const errorMsg = data.msg;
                 throw new Error(errorMsg);
               };
-              set({ deudas: data.deudas });
-              set({ pagos: data.pagos });
+              set({ deudas: data.debts });
+              set({ pagos: data.payments });
             } catch (error) {
               if(error.name === 'TypeError' && error.message === "Failed to fetch") {
                 console.error("Servidor no disponible", error.message);

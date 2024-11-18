@@ -216,7 +216,6 @@ def get_client_deudas(id):
 @api.route('/deudas', methods=['POST'])
 def create_deuda():
     data = request.json
-    print('aaaaaaa', data)
     user = Users.query.get(data['userId'])
     if not user:
         return jsonify({"msg": "Usuario no encontrado"}), 400

@@ -21,7 +21,7 @@ export const PagoCard = (pago) => {
         </div>
         <div>
           <p className="font-semibold">Expediente:</p>
-          <p className="font-normal">{pagoData?.expediente}</p>
+          <p className="font-normal">{pagoData?.numExp}</p>
         </div>
         <div>
             <label className="font-semibold flex items-center" htmlFor="">

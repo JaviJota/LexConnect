@@ -6,7 +6,7 @@ export const ClientCard = ({ client }) => {
         <main className="grid grid-cols-1 gap-4 p-4 mb-3 rounded-md bg-gray-200 hover:bg-gray-300 cursor-pointer lg:grid-flow-col lg:grid-cols-6 lg:justify-items-center">
           <div className="lg:col-span-1">
             <span className="lg:hidden font-semibold">Nombre: </span>
-            {client.first_name + " " + client.last_name}
+            {client.firstName + " " + client.lastName}
           </div>
           <div className="lg:col-span-1">
             <span className="lg:hidden font-semibold">Email: </span>
@@ -14,19 +14,19 @@ export const ClientCard = ({ client }) => {
           </div>
           <div className="lg:col-span-1">
             <span className="md:hidden font-semibold">Teléfono: </span>
-            {client.phone_number || "-"}
+            {client.phoneNumber || "-"}
           </div>
           <div className="lg:col-span-1">
             <span className="lg:hidden font-semibold">Expedientes: </span>
-            {client.expedientes ? client.expedientes.length : "0"}
+            {client.CaseFiles ? client.CaseFiles.length : 0}
           </div>
           <div className="lg:col-span-1">
             <span className="lg:hidden font-semibold">Deudas: </span>
-            {client.deudas}€
+            {client?.totalDebts != null ? client.totalDebts : 0} €
           </div>
           <div className="lg:col-span-1">
             <span className="lg:hidden font-semibold">Pagos: </span>
-            {client.pagos}€
+            {client.payment}€
           </div>
         </main>
       </Link>

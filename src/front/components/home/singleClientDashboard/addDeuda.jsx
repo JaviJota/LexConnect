@@ -20,7 +20,7 @@ export const AddDeuda = ({ show, close }) => {
   const createDeudaFunc = useDeudasStore((state) => state.addDeuda)
   
   const [open, setOpen] = useState(show);
-  const [expedienteDropdownOpened, setExpedienteDropdownOpened] =
+  const [caseFileDropdownOpened, setCaseFileDropdownOpened] =
   useState(false);
   
   const userData =
@@ -28,38 +28,33 @@ export const AddDeuda = ({ show, close }) => {
   const userId = userData?.user?.id;
   const [clientId, setClientId] = useState(null)
   const [error, setError] = useState("");
-  const [expedienteInputValue, setExpedienteInputValue] = useState("");
+  const [caseFileInputValue, setcaseFileInputValue] = useState("");
   
   const [formData, setFormData] = useState({
     amount: "",
     concept: "",
-    expedienteId: null,
-    userId: userId,
-    clientId: null,
+    caseFileId: null,
   });
   useEffect(() => {
     if (client) {
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        clientId: client.id, // Sincroniza clientId en formData
-      }));
+      setClientId(client.id);
     }
-  }, [client, userId]); // Escucha cambios en `client` y `userId`
+  }, [client, userId]); 
   const dropdownRef = useRef(null);
 
-  const filteredExpedientes = client?.expedientes?.filter((expediente) =>
-    expediente.num_exp
+  const filteredCaseFiles = client?.CaseFiles?.filter((caseFile) =>
+    caseFile.numExp
       .toLowerCase()
-      .includes(expedienteInputValue.toLowerCase())
+      .includes(caseFileInputValue.toLowerCase())
   );
 
-  const handleSelectExpediente = (expediente) => {
-    setExpedienteInputValue(expediente.num_exp)
+  const handleSelectcaseFile = (caseFile) => {
+    setcaseFileInputValue(caseFile.numExp)
     setFormData({
       ...formData,
-      expedienteId: expediente.id,
+      caseFileId: caseFile.id,
     });
-    setExpedienteDropdownOpened(false);
+    setCaseFileDropdownOpened(false);
   };
 
   const handleChange = (e) => {
@@ -70,7 +65,7 @@ export const AddDeuda = ({ show, close }) => {
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setExpedienteDropdownOpened(false);
+        setCaseFileDropdownOpened(false);
       }
     };
 
@@ -82,7 +77,7 @@ export const AddDeuda = ({ show, close }) => {
 
   const handleCreateDeuda = async (e) => {
     e.preventDefault();
-    const createDeuda = await createDeudaFunc(formData);
+    const createDeuda = await createDeudaFunc(formData, clientId);
     if(!createDeuda.success) {
       setError(createDeuda.msg);
       return;
@@ -91,11 +86,11 @@ export const AddDeuda = ({ show, close }) => {
     setFormData({
       amount: "",
       concept: "",
-      expedienteId: null,
+      caseFileId: null,
       userId: userId,
       clientId: client?.id || null,
     });
-    setExpedienteInputValue("")
+    setcaseFileInputValue("")
     close();
     setError("");
     return;
@@ -107,11 +102,11 @@ export const AddDeuda = ({ show, close }) => {
       setFormData({
         amount: "",
         concept: "",
-        expedienteId: null,
+        caseFileId: null,
         userId: userId,
         clientId: client?.id || null,
       });
-      setExpedienteInputValue("")
+      setcaseFileInputValue("")
       setError("");
     }, 100);
   };
@@ -199,32 +194,32 @@ export const AddDeuda = ({ show, close }) => {
                           <input
                             id="clientSearch"
                             type="text"
-                            value={expedienteInputValue}
-                            onFocus={() => setExpedienteDropdownOpened(true)}
+                            value={caseFileInputValue}
+                            onFocus={() => setCaseFileDropdownOpened(true)}
                             onChange={(e) =>
-                              setExpedienteInputValue(
+                              setCaseFileInputValue(
                                 e.target.value.toLowerCase()
                               )
                             }
-                            placeholder="Buscar expediente"
+                            placeholder="Buscar caseFile"
                             className="block rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 w-72 border-0 bg-transparent py-1.5 pl-2 mt-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                             autoComplete="off"
                           />
                         </div>
 
-                        {/* Dropdown de expedientes */}
-                        {expedienteDropdownOpened &&
-                          filteredExpedientes.length > 0 && (
+                        {/* Dropdown de caseFiles */}
+                        {caseFileDropdownOpened &&
+                          filteredCaseFiles.length > 0 && (
                             <ul className="absolute z-10 bg-gray-200 border border-gray-300 rounded-md top-full mt-1 max-h-32 w-full overflow-y-auto">
-                              {filteredExpedientes.map((expediente) => (
+                              {filteredCaseFiles.map((caseFile) => (
                                 <li
-                                  key={expediente.id}
+                                  key={caseFile.id}
                                   className="px-4 py-2 text-sm hover:bg-sky-600 hover:text-white cursor-pointer"
                                   onClick={() =>
-                                    handleSelectExpediente(expediente)
+                                    handleSelectcaseFile(caseFile)
                                   }
                                 >
-                                  {expediente.num_exp}
+                                  {caseFile.numExp}
                                 </li>
                               ))}
                             </ul>

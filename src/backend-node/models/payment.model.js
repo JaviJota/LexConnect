@@ -1,7 +1,7 @@
-const { DataTypes } = require('sequelize');
+import { DataTypes } from 'sequelize';
+import { sequelize } from '../database/database.js';
 
-module.exports = (sequelize) => {
-    const Payment = sequelize.define('Payment', {
+export const Payment = sequelize.define('Payment', {
         id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
@@ -21,33 +21,32 @@ module.exports = (sequelize) => {
             type: DataTypes.DATEONLY,
             defaultValue: DataTypes.NOW,
         },
-        userId: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            references: {
-                model: 'User',
-                key: 'id',
-            },
-            unique: false,
-        },
-        clientId: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            references: {
-                model: 'Client',
-                key: 'id',
-            },
-            unique: false,
-        },
-        caseFileId: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            references: {
-                model: 'CaseFile',
-                key: 'id',
-            },
-            unique: false,
-        },
+        // userId: {
+        //     type: DataTypes.INTEGER,
+        //     allowNull: false,
+        //     references: {
+        //         model: 'UserModel',
+        //         key: 'id',
+        //     },
+        //     unique: false,
+        // },
+        // clientId: {
+        //     type: DataTypes.INTEGER,
+        //     allowNull: false,
+        //     references: {
+        //         model: 'ClientModel',
+        //         key: 'id',
+        //     },
+        //     unique: false,
+        // },
+        // caseFileId: {
+        //     type: DataTypes.INTEGER,
+        //     allowNull: false,
+        //     references: {
+        //         model: 'CaseFileModel',
+        //         key: 'id',
+        //     },
+        //     unique: false,
+        // },
     });
-    return Payment;
-};
+

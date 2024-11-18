@@ -45,7 +45,7 @@ export const DeudaCard = (deuda) => {
         </div>
         <div>
           <p className="font-semibold">Expediente:</p>
-          <p className="font-normal">{deudaData?.expediente}</p>
+          <p className="font-normal">{deudaData?.CaseFile?.numExp}</p>
         </div>
         <div>
           <label className="font-semibold flex items-center" htmlFor="liquidar">

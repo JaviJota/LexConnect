@@ -1,23 +1,22 @@
-const { DataTypes } = require('sequelize');
+import { DataTypes } from 'sequelize';
+import { sequelize } from '../database/database.js';
 
-module.exports = (sequelize) => {
-    const ClientCaseFile = sequelize.define('ClientCaseFile', {
-        clientId: {
+export const ClientCaseFile = sequelize.define('ClientCaseFile', {
+    ClientId: {
             type: DataTypes.INTEGER,
             primaryKey: true,
             references: {
                 model: 'Clients',
                 key: 'id'
             },
+    },
+    CaseFileId: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        references: {
+            model: 'CaseFiles',
+            key: 'id'
         },
-        CaseFileId: {
-            type: DataTypes.INTEGER,
-            primaryKey: true,
-            references: {
-                model: 'CaseFile',
-                key: 'id'
-            },
-        },
-    });
-    return ClientCaseFile;
-};
+    },
+});
+

@@ -5,7 +5,7 @@ import { PagoCard } from "./pagoCard.jsx";
 import { AddDeuda } from "./addDeuda.jsx";
 import { useDeudasStore } from "../../../store/deudaDataStore.jsx";
 import { useParams } from "react-router-dom";
-import { useClientsStore } from "../../../store/ClientDataStore.jsx";
+import { useClientsStore } from "../../../store/clientDataStore.jsx";
 
 export const SingleClientDashboard = () => {
   const deudas = useDeudasStore((state) => state.deudas);
@@ -53,7 +53,7 @@ export const SingleClientDashboard = () => {
     <main>
       <div className="flex justify-between">
         <h1 className="mt-4 mx-5 text-5xl font-bold text-cyan-800">
-          {client.first_name} <br /> {client.last_name}
+          {client.firstName} <br /> {client.lastName}
         </h1>
         <div className="mr-3 self-end">
           <button className="bg-cyan-800 text-white py-2 px-4 rounded-md ">
@@ -65,11 +65,15 @@ export const SingleClientDashboard = () => {
         <h5 className="py-4 font-bold text-gray-800 text-lg">Contacto</h5>
         <div>
           <p className="ml-4 font-medium text-normal">
-            Email: <span className="text-lg font-normal">{client.email}</span>
+            Email: <span className="text-md font-normal">{client.email}</span>
           </p>
           <p className="ml-4 mt-3 font-medium text-md">
             Teléfono:{" "}
-            <span className="text-lg font-normal">{client.phone_number}</span>
+            <span className="text-md font-normal">{client.phoneNumber}</span>
+          </p>
+          <p className="ml-4 mt-3 font-medium text-md w-full">
+            Otros datos:{" "}
+            <span className="text-md font-normal block w-1/2">{client.description}</span>
           </p>
         </div>
       </div>

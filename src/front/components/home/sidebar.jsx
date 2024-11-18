@@ -1,16 +1,31 @@
+import { PowerIcon } from "@heroicons/react/16/solid";
 import {
   ChevronDoubleLeftIcon,
   ChevronDoubleRightIcon,
+  
 } from "@heroicons/react/24/outline";
 import { createContext, useContext, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { useUserStore } from "../../store/userDataStore";
 
 const SidebarContext = createContext();
 
 export const Sidebar = ({ children }) => {
+  const logoutFunc = useUserStore((state) => state.logoutUser)
   const [expanded, setExpanded] = useState(true);
+  const navigate = useNavigate();
   const localData = JSON.parse(localStorage.getItem("lexigest_user_data"));
   const userData = localData?.user || "";
+
+  const logout = async () => {
+    try {
+      await logoutFunc();
+      navigate('/');
+      window.location.reload();
+    } catch (error) {
+      console.error("Error al cerrar sesión:", error.message || error);
+    }
+  };
 
   return (
     <aside >
@@ -44,6 +59,26 @@ export const Sidebar = ({ children }) => {
         <SidebarContext.Provider value={{ expanded }}>
           <ul className="flex-1 px-3">{children}</ul>
         </SidebarContext.Provider>
+
+        <div>
+          <ul className="px-3">
+            <li onClick={() => logout()}
+              className={`
+                relative flex items-center py-2 px-3 my-1
+                font-medium rounded-md cursor-pointer
+                transition-colors hover:bg-gray-100 text-gray-600
+              `}
+            >
+              <PowerIcon className="size-5"/>
+              <span
+                className={`overflow-hidden transition-all
+                ${expanded ? "w-52 ml-3" : "hidden"}`}
+              >
+                Cerrar sesión
+              </span>
+            </li>
+          </ul>
+        </div>
 
         <div className="border-t flex p-3">
           <img

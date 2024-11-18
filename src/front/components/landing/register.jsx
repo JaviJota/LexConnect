@@ -23,8 +23,8 @@ export const Register = ({ show, close }) => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-    first_name: "",
-    last_name: "",
+    firstName: "",
+    lastName: "",
   });
 
   // -------------Funciones----------------
@@ -60,7 +60,7 @@ export const Register = ({ show, close }) => {
       setError(login.msg);
       return;
     } 
-    setFormData({ email: "", password: "", first_name: "", last_name: "" });
+    setFormData({ email: "", password: "", firstName: "", lastName: "" });
     close();
     setError("");
     navigate("/Clientes");
@@ -70,7 +70,7 @@ export const Register = ({ show, close }) => {
   const handleClose = () => {
     close();
     setTimeout(() => {
-      setFormData({ email: "", password: "", first_name: "", last_name: "" });
+      setFormData({ email: "", password: "", firstName: "", lastName: "" });
       setOpenRegisterForm(false);
       setError("")
     }, 100);
@@ -147,15 +147,15 @@ export const Register = ({ show, close }) => {
                         <>
                           <div className="sm:col-span-12 flex flex-col items-center">
                             <label
-                              htmlFor="first_name"
+                              htmlFor="firstName"
                               className="block w-72 text-sm font-medium leading-6 text-gray-900"
                             >
                               Nombre
                             </label>
                             <input
                               onChange={handleChange}
-                              id="first_name"
-                              name="first_name"
+                              id="firstName"
+                              name="firstName"
                               type="text"
                               placeholder="Nombre"
                               className="block rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 w-72 border-0 bg-transparent py-1.5 pl-2 mt-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
@@ -164,15 +164,15 @@ export const Register = ({ show, close }) => {
                           </div>
                           <div className="sm:col-span-12 flex flex-col items-center">
                             <label
-                              htmlFor="last_name"
+                              htmlFor="lastName"
                               className="block w-72 text-sm font-medium leading-6 text-gray-900"
                             >
                               Apellidos
                             </label>
                             <input
                               onChange={handleChange}
-                              id="last_name"
-                              name="last_name"
+                              id="lastName"
+                              name="lastName"
                               type="text"
                               placeholder="Apellidos"
                               className="block rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 w-72 border-0 bg-transparent py-1.5 pl-2 mt-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
