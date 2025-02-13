@@ -9,8 +9,8 @@ import {
 } from "@headlessui/react";
 import { useNavigate } from "react-router-dom";
 import { useUserStore } from "../../../store/userDataStore";
-import { useClientsStore } from "../../../store/ClientDataStore";
-import { useDeudasStore } from "../../../store/deudaDataStore";
+import { useClientsStore } from "../../../store/clientDataStore.jsx";
+import { useDeudasStore } from "../../../store/deudaDataStore.jsx";
 import { useExpedientesStore } from "../../../store/expedienteDataStore";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
@@ -20,15 +20,13 @@ export const AddDeuda = ({ show, close }) => {
   const createDeudaFunc = useDeudasStore((state) => state.addDeuda)
   
   const [open, setOpen] = useState(show);
-  const [caseFileDropdownOpened, setCaseFileDropdownOpened] =
-  useState(false);
+  const [caseFileDropdownOpened, setCaseFileDropdownOpened] = useState(false);
   
-  const userData =
-  userDataFromStore || JSON.parse(localStorage.getItem("lexigestUserData"));
+  const userData = userDataFromStore || JSON.parse(localStorage.getItem("lexigestUserData"));
   const userId = userData?.user?.id;
   const [clientId, setClientId] = useState(null)
   const [error, setError] = useState("");
-  const [caseFileInputValue, setcaseFileInputValue] = useState("");
+  const [caseFileInputValue, setCaseFileInputValue] = useState("");
   
   const [formData, setFormData] = useState({
     amount: "",
@@ -48,8 +46,8 @@ export const AddDeuda = ({ show, close }) => {
       .includes(caseFileInputValue.toLowerCase())
   );
 
-  const handleSelectcaseFile = (caseFile) => {
-    setcaseFileInputValue(caseFile.numExp)
+  const handleSelectCaseFile = (caseFile) => {
+    setCaseFileInputValue(caseFile.numExp)
     setFormData({
       ...formData,
       caseFileId: caseFile.id,
@@ -90,7 +88,7 @@ export const AddDeuda = ({ show, close }) => {
       userId: userId,
       clientId: client?.id || null,
     });
-    setcaseFileInputValue("")
+    setCaseFileInputValue("")
     close();
     setError("");
     return;
@@ -106,7 +104,8 @@ export const AddDeuda = ({ show, close }) => {
         userId: userId,
         clientId: client?.id || null,
       });
-      setcaseFileInputValue("")
+      setCaseFileInputValue("");
+      setCaseFileDropdownOpened(false);
       setError("");
     }, 100);
   };
@@ -201,7 +200,7 @@ export const AddDeuda = ({ show, close }) => {
                                 e.target.value.toLowerCase()
                               )
                             }
-                            placeholder="Buscar caseFile"
+                            placeholder="Buscar expediente"
                             className="block rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 w-72 border-0 bg-transparent py-1.5 pl-2 mt-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                             autoComplete="off"
                           />
@@ -216,7 +215,7 @@ export const AddDeuda = ({ show, close }) => {
                                   key={caseFile.id}
                                   className="px-4 py-2 text-sm hover:bg-sky-600 hover:text-white cursor-pointer"
                                   onClick={() =>
-                                    handleSelectcaseFile(caseFile)
+                                    handleSelectCaseFile(caseFile)
                                   }
                                 >
                                   {caseFile.numExp}
@@ -250,7 +249,7 @@ export const AddDeuda = ({ show, close }) => {
                     <div className="sm:col-span-12 flex flex-col items-center mt-2">
                       <button
                         type="submit"
-                        className="inline-flex w-full justify-center rounded-md bg-cyan-800 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-cyan-900 sm:w-72"
+                        className="inline-flex w-full justify-center rounded-md bg-cyan-800 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-cyan-900 transition-colors sm:w-72"
                       >
                         Añadir deuda
                       </button>

@@ -63,7 +63,7 @@ export const Navbar = () => {
         <PopoverGroup className="hidden lg:flex lg:gap-x-12">
           <Popover className="relative">
             <PopoverButton className="flex items-center gap-x-1 text-lg font-semibold leading-6 text-cyan-800">
-              Product
+              Lorem Ipsum
               <ChevronDownIcon aria-hidden="true" className="h-5 w-5 flex-none text-gray-400" />
             </PopoverButton>
 
@@ -106,13 +106,13 @@ export const Navbar = () => {
           </Popover>
 
           <a href="#" className="text-lg font-semibold leading-6 text-cyan-800">
-            Features
+            Lorem Ipsum
           </a>
           <a href="#" className="text-lg font-semibold leading-6 text-cyan-800">
-            Marketplace
+            Lorem Ipsum
           </a>
           <a href="#" className="text-lg font-semibold leading-6 text-cyan-800">
-            Company
+            Lorem Ipsum
           </a>
         </PopoverGroup>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">

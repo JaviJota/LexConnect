@@ -76,9 +76,8 @@ export const useDeudasStore = create(
         },
         deleteDeuda: async (id) => {
           try {
-            const resp = await fetch(
-              import.meta.env.VITE_BACKEND_URL + `/api/deudas/${id}`,
-              {
+            const url = `${import.meta.env.VITE_BACKEND_URL}/debts/${id}`
+            const resp = await fetchWrapper(url, {
                 method: "DELETE",
                 headers: {
                   "Content-Type": "application/json",
@@ -91,7 +90,7 @@ export const useDeudasStore = create(
               const errorMsg = data.msg;
               throw new Error(errorMsg);
             }
-            set({ deudas: data.deudas })
+            set({ deudas: data.clientDebts })
             return { success: true };
           } catch (error) {
             if (error.name === "TypeError" && error.message === "Failed to fetch") {
@@ -102,6 +101,39 @@ export const useDeudasStore = create(
               };
             }
             console.error("Error al eliminar deuda.", error.message);
+            return { success: false, msg: error.message };
+          }
+        },
+        deletePago: async (id) => {
+          try {
+            const url = `${import.meta.env.VITE_BACKEND_URL}/payments/${id}`
+            const resp = await fetchWrapper(url, {
+                method: "DELETE",
+                headers: {
+                  "Content-Type": "application/json",
+                  accept: "application/json",
+                },
+              }
+            );
+            const data = await resp.json();
+            if (resp.status === 404) {
+              set({ pagos: [] })
+            }
+            if (!resp.ok) {
+              const errorMsg = data.msg;
+              throw new Error(errorMsg);
+            }
+            set({ pagos: data })
+            return { success: true };
+          } catch (error) {
+            if (error.name === "TypeError" && error.message === "Failed to fetch") {
+              console.error("Servidor no disponible", error.message);
+              return {
+                success: false,
+                msg: "Ups, parece que algo salió mal, inténtelo de nuevo más tarde.",
+              };
+            }
+            console.error("Error al eliminar pago.", error.message);
             return { success: false, msg: error.message };
           }
         },
@@ -136,7 +168,8 @@ export const useDeudasStore = create(
         },
         getPagos: async (id) => {
             try {
-                const resp = await fetch(import.meta.env.VITE_BACKEND_URL + `/api/client/${id}/pagos`, {
+                const url = `${import.meta.env.VITE_BACKEND_URL}/client/${id}/payments`
+                const resp = await fetchWrapper(url, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -153,7 +186,7 @@ export const useDeudasStore = create(
                     const errorMsg = data.msg;
                     throw new Error(errorMsg);
                 }
-                set({ pagos: data.pagos })
+                set({ pagos: data })
                 return ({ success: true})
             } catch (error) {
                 if(

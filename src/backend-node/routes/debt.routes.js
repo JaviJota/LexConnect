@@ -1,13 +1,15 @@
 import { Router } from "express";
-import { createDebt, getDebts } from "../controllers/debts.controllers.js";
+import { createDebt, deleteDebt, getDebts } from "../controllers/debts.controllers.js";
 
 const router = Router();
 
-// router.get("/user/:id/debts");
-// router.get("/debts/:id");
 router.get("/clients/:id/debts", getDebts);
 router.post("/clients/:id/debts", createDebt);
-// router.put("/debts/:id");
-router.delete("/debts/:id");
+router.delete("/debts/:id", deleteDebt);
 
 export default router;
+
+// -------------
+// router.get("/user/:id/debts");
+// router.get("/debts/:id");
+// router.put("/debts/:id");

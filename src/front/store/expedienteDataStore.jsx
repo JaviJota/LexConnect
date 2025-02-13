@@ -4,6 +4,7 @@ import { fetchWrapper } from '../utils/fetchwrapper';
 export const useExpedientesStore = create(
     (set, get) => ({
         expedientes: [],
+        clientCaseFiles: [],
 
         getExpedientes: async () => {
             try {
@@ -27,6 +28,40 @@ export const useExpedientesStore = create(
                     error.name === 'TypeError' &&
                     error.message === 'Failed to fetch'
                 ){
+                    console.error("Servidor no disponible", error.message);
+                    return {
+                        success: false,
+                        msg: "Ups, parece que algo salió mal, inténtelo de nuevo más tarde."
+                    };
+                };
+                console.error('Error al recuperar expedientes');
+                return ({ success: false, msg: error.message })
+            }
+        },
+        getClientCaseFiles: async (id) => {
+            try {
+                const url = `${import.meta.env.VITE_BACKEND_URL}/clients/${id}/casefiles`;
+                const resp = await fetchWrapper(url, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        accept: 'application/json'
+                    }
+                });
+
+                const data = await resp.json();
+                if (!resp.ok) {
+                    const errorMsg = data.msg;
+                    throw new Error(errorMsg);
+                }
+                set({ clientCaseFiles: data });
+                return ({ success: false })
+
+            } catch (error) {
+                if (
+                    error.name === 'TypeError' &&
+                    error.message === 'Failed to fetch'
+                ) {
                     console.error("Servidor no disponible", error.message);
                     return {
                         success: false,

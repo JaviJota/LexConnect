@@ -38,7 +38,7 @@ export const SingleClient = () => {
             />
           </Sidebar>
           
-          <section className="flex-1 p-4 overflow-auto">
+          <section className="flex-1 overflow-auto">
             <SingleClientDashboard />
           </section>
         </div>

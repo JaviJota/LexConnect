@@ -1,6 +1,5 @@
 import { create } from 'zustand'
 import { fetchWrapper } from '../utils/fetchwrapper';
-import { useUserStore } from './userDataStore';
 
 export const useClientsStore = create(
     (set, get) => ({

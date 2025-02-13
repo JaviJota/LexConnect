@@ -26,7 +26,7 @@ export const ClientCard = ({ client }) => {
           </div>
           <div className="lg:col-span-1">
             <span className="lg:hidden font-semibold">Pagos: </span>
-            {client.payment}€
+            {client?.totalPayments != null ? client?.totalPayments : 0}€
           </div>
         </main>
       </Link>

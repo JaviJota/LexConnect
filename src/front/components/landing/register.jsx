@@ -27,7 +27,6 @@ export const Register = ({ show, close }) => {
     lastName: "",
   });
 
-  // -------------Funciones----------------
   const handleConfirmPasswordChange = (e) => {
     setConfirmPassword(e.target.value);
   };

@@ -27,7 +27,7 @@ export const getUserClients = async (req, res) => {
 
     const user = await User.findOne({ where: { id } });
     if (!user) {
-        return res.status(404).json({ message: 'User not found' });
+      return res.status(404).json({ message: "User not found" });
     }
 
     const clients = await Client.findAll({
@@ -47,28 +47,24 @@ export const getUserClients = async (req, res) => {
       ],
       attributes: {
         include: [
+          [Sequelize.fn("SUM", Sequelize.col("Debts.amount")), "totalDebts"],
           [
-            Sequelize.fn('SUM', Sequelize.col('Debts.amount')),
-            'totalDebts',
+            Sequelize.fn("SUM", Sequelize.col("Payments.amount")),
+            "totalPayments",
           ],
-          [
-            Sequelize.fn('SUM', Sequelize.col('Payments.amount')),
-            'totalPayments',
-          ],
-        ]
+        ],
       },
       group: [
-        'Client.id',
-        'CaseFiles.id', // Asegúrate de agrupar también por el modelo relacionado
-        'CaseFiles->ClientCaseFile.ClientId', // Columnas del modelo de unión
-        'CaseFiles->ClientCaseFile.CaseFileId',
-      ]
+        "Client.id",
+        "CaseFiles.id", 
+        "CaseFiles->ClientCaseFile.ClientId",
+        "CaseFiles->ClientCaseFile.CaseFileId",
+      ],
     });
     if (!clients.length) {
       return res.status(404).json({ message: "Clients not found" });
     }
 
-    
     res.json(clients);
   } catch (error) {
     return res.status(500).json({ message: error.message });
@@ -77,16 +73,22 @@ export const getUserClients = async (req, res) => {
 
 export const createClient = async (req, res) => {
   try {
-    const { clientEmail, clientFirstName, clientLastName, clientPhoneNumber, clientDescription } = req.body;
+    const {
+      clientEmail,
+      clientFirstName,
+      clientLastName,
+      clientPhoneNumber,
+      clientDescription,
+    } = req.body;
 
     const userId = req.user.id;
-  
-    Validation.validateField(clientEmail, 'Email');
-    Validation.validateField(clientFirstName, 'First name');
-    Validation.validateField(clientLastName, 'Last name');
-    Validation.validateField(clientPhoneNumber, 'Phone number');
-    Validation.validateField(clientDescription, 'Description');
-  
+
+    Validation.validateField(clientEmail, "Email");
+    Validation.validateField(clientFirstName, "First name");
+    Validation.validateField(clientLastName, "Last name");
+    Validation.validateField(clientPhoneNumber, "Phone number");
+    Validation.validateField(clientDescription, "Description");
+
     await Client.create({
       email: clientEmail.trim().toLowerCase(),
       firstName: formatName(clientFirstName),
@@ -97,12 +99,11 @@ export const createClient = async (req, res) => {
     });
 
     const clients = await Client.findAll({
-      where: {userId: userId},
+      where: { userId: userId },
       include: [CaseFile],
     });
 
     return res.status(201).json({ clients: clients });
-
   } catch (error) {
     return res.status(400).json({ message: error.message });
   }
@@ -113,14 +114,14 @@ export const getClient = async (req, res) => {
     const { id } = req.params;
 
     const client = await Client.findByPk(id, {
-      include: [CaseFile]
+      include: [CaseFile],
     });
-    if(!client) {
-      return res.status(404).json({ message: "Client not found." })
+    if (!client) {
+      return res.status(404).json({ message: "Client not found." });
     }
 
-    res.json({ client })
+    res.json({ client });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
-}
+};
